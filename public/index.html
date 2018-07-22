@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Exercise Tracker</title>
+    <link rel='stylesheet' href='./styles/style.css'>
+  </head>
+  <body>
+    <div class='container'>
+      <header><h1>Exercise Tracker</h1></header>
+      <section class='forms'>
+        <form action='/api/exercise/new-user' method='get'>
+          <h3>Create New User</h3>
+          <code>POST /api/exercise/new-user</code>
+          <input type='text' id='username' name='username' placeholder='Enter user name' required>
+          <input type='submit' value='Submit'>
+        </form>
+        <form action='/api/exercise/add' method='get'>
+          <h3>Add exercise</h3>
+          <code>POST /api/exercise/add</code>
+          <input type='text' id='user-id' name='userId' placeholder='User ID *' required>
+          <input type='text' id='desc' name='desc' placeholder='Description *' required>
+          <input type='text' id='dur' name='duration' placeholder='Duration *' required>
+          <input type='text' id='date' name='date' placeholder='Date (YYYY-MM-DD)'>
+          <input type='submit' value='Submit'>
+        </form>
+      </section>
+      <p><strong>GET users's exercise log: </strong><code>GET /api/exercise/log?{userId}[&from][&to][&limit]</code></p>
+      <p><strong>{ }</strong> = required, <strong>[ ]</strong> = optional</p>
+      <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+    </div>
+  </body>
+</html>
