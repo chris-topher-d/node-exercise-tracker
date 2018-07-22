@@ -64,23 +64,17 @@ app.get('/api/exercise/add', (req, res) => {
 app.get('/api/exercise/log', (req, res) => {
   let id = req.query.userId;
   let from = req.query.from === undefined ? new Date(0000-00-00) : new Date(req.query.from);
-  let to = req.query.to === undefined ? null : new Date(req.query.to);
-  // let from = req.query.from;
-  // let to = req.query.to;
+  let to = req.query.to === undefined ? new Date() : new Date(req.query.to);
   let limit = !req.query.limit ? null : req.query.limit;
 
-  console.log(id);
-  console.log(from);
-  console.log(to);
-  console.log(limit);
-
-  User.findById(id)
-    .where('date').gt(ISODate(from)).lt(to)
-    .limit(limit)
-    .exec((err, logs) => {
-      if (err) return handleError(err);
-      if (!logs) return res.send(`No logs found for user id ${id}`);
-      return res.json(logs);
+  User.find({'_id': id})
+    .exec((err, user) => {
+      if (err) return res.json(err);
+      if (!user) return res.send(`No logs found for user id ${id}`);
+      let logs = user[0].logs.filter(log => {
+        return log.date >= from && log.date <= to;
+      }).slice(0, limit || user[0].logs.length);
+      logs.length > 0 ? res.send(logs) : res.send('No logs found');
     });
 });
 
